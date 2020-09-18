@@ -6,24 +6,12 @@ use std::convert::TryInto;
 
 pg_module_magic!();
 
-fn bucket_create(
-    server: String,
-    input_bucket: String,
-    input_identity: String,
-    input_secret: String,
-) -> Bucket {
-    let mut bucket = Bucket::new(
-        &input_bucket,
-        Region::Custom {
-            region: "none".into(),
-            endpoint: server.into(),
-        },
-        Credentials::new_blocking(Some(&input_identity), Some(&input_secret), None, None, None)
-            .unwrap(),
-    )
-    .unwrap();
-    bucket.set_path_style();
-    return bucket;
+struct Storage {
+    name: String,
+    region: Region,
+    credentials: Credentials,
+    bucket: String,
+    location_supported: bool,
 }
 
 #[pg_extern]
@@ -35,7 +23,23 @@ fn pgx_s3sign_pre_get(
     input_file: String,
     duration: i32,
 ) -> String {
-    let bucket = bucket_create(server, input_bucket, input_identity, input_secret);
+    let my_creds =
+        Credentials::new_blocking(Some(&input_identity), Some(&input_secret), None, None, None)
+            .unwrap();
+
+    let minio = Storage {
+        name: "minio".into(),
+        region: Region::Custom {
+            region: "us-east-1".into(),
+            endpoint: server.into(),
+        },
+        credentials: my_creds,
+        bucket: input_bucket,
+        location_supported: false,
+    };
+
+    let mut bucket = Bucket::new(&minio.bucket, minio.region, minio.credentials).unwrap();
+    bucket.set_path_style();
 
     let url = bucket
         .presign_get(input_file, duration.try_into().unwrap())
@@ -52,7 +56,24 @@ fn pgx_s3sign_pre_put(
     input_file: String,
     duration: i32,
 ) -> String {
-    let bucket = bucket_create(server, input_bucket, input_identity, input_secret);
+    let my_creds =
+        Credentials::new_blocking(Some(&input_identity), Some(&input_secret), None, None, None)
+            .unwrap();
+
+    let minio = Storage {
+        name: "minio".into(),
+        region: Region::Custom {
+            region: "us-east-1".into(),
+            endpoint: server.into(),
+        },
+        credentials: my_creds,
+        bucket: input_bucket,
+        location_supported: false,
+    };
+
+    let mut bucket = Bucket::new(&minio.bucket, minio.region, minio.credentials).unwrap();
+    bucket.set_path_style();
+
     let url = bucket
         .presign_put(input_file, duration.try_into().unwrap())
         .unwrap();
