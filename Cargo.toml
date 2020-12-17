@@ -1,5 +1,5 @@
 [package]
-name = "pgx-s3sign"
+name = "pgx_s3sign"
 version = "1.0.0"
 edition = "2018"
 
