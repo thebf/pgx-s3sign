@@ -7,22 +7,23 @@ edition = "2018"
 crate-type = ["cdylib"]
 
 [features]
-default = ["pg12"]
+default = ["pg13"]
 pg10 = ["pgx/pg10"]
 pg11 = ["pgx/pg11"]
 pg12 = ["pgx/pg12"]
+pg12 = ["pgx/pg13"]
 pg_test = []
 
 [dependencies]
-pgx = "0.0.13"
-pgx-macros = "0.0.13"
+pgx = "0.1.16"
+pgx-macros = "0.1.6"
 rust-s3 = "0.22.12"
 aws-region = "0.21.0"
 aws-creds = "0.22.2"
 futures = "0.3.5"
 
 [dev-dependencies]
-pgx-tests = "0.0.13"
+pgx-tests = "0.1.6"
 
 [profile.dev]
 panic = "unwind"
