@@ -1,5 +1,5 @@
 use awscreds::Credentials;
-use pgx::*;
+use pgrx::*;
 use s3::bucket::Bucket;
 use s3::region::Region;
 use std::convert::TryInto;
