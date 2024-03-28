@@ -1,0 +1,5 @@
+comment = 'Sign S3 requests, fast:  Created by pgx'
+default_version = '1.0'
+module_pathname = '$libdir/pgx_s3sign'
+relocatable = false
+superuser = false
