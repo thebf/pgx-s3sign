@@ -7,7 +7,7 @@ edition = "2021"
 crate-type = ["cdylib", "lib"]
 
 [[bin]]
-name = "pgrx_embed_testproj"
+name = "pgrx_embed_pgx_s3sign"
 path = "./src/bin/pgrx_embed.rs"
 
 [features]
