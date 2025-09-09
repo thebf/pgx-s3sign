@@ -1,11 +1,10 @@
 use awscreds::Credentials;
-use pgrx::*;
+use pgrx::prelude::*;
 use s3::bucket::Bucket;
 use s3::region::Region;
 use std::convert::TryInto;
 
-pg_module_magic!();
-
+::pgrx::pg_module_magic!(name, version);
 fn bucket_create(
     server: String,
     input_bucket: String,
@@ -59,16 +58,6 @@ fn pgx_s3sign_pre_put(
     url
 }
 
-#[cfg(any(test, feature = "pg_test"))]
-mod tests {
-    use pgx::*;
-
-    #[pg_test]
-    fn test_hello_my_extension() {
-        assert_eq!("Hello, my_extension", crate::hello_my_extension());
-    }
-}
-
 #[cfg(test)]
 pub mod pg_test {
     pub fn setup(_options: Vec<&str>) {
@@ -80,5 +69,3 @@ pub mod pg_test {
         vec![]
     }
 }
-
-//todo:implement tests.
