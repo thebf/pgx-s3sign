@@ -11,16 +11,16 @@ name = "pgrx_embed_pgx_s3sign"
 path = "./src/bin/pgrx_embed.rs"
 
 [features]
-default = ["pg17"]
+default = ["pg18"]
 pg14 = ["pgrx/pg14" ]
 pg15 = ["pgrx/pg15" ]
 pg16 = ["pgrx/pg16" ]
 pg17 = ["pgrx/pg17" ]
-#pg18 = ["pgrx/pg18", "pgrx-tests/pg18" ]
+pg18 = ["pgrx/pg18" ]
 pg_test = []
 
 [dependencies]
-pgrx = "=0.16.0"
+pgrx = "=0.16.1"
 rust-s3 = "0.22.12"
 aws-creds = "0.22.2"
 
