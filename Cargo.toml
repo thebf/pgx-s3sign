@@ -10,6 +10,9 @@ crate-type = ["cdylib", "lib"]
 name = "pgrx_embed_pgx_s3sign"
 path = "./src/bin/pgrx_embed.rs"
 
+[package.metadata.pgrx]
+extension_name = "pgx_s3sign"
+
 [features]
 default = ["pg18"]
 pg14 = ["pgrx/pg14" ]
